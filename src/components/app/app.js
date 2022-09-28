@@ -1,28 +1,88 @@
-import React from 'react';
-
+import React, { Component} from 'react';
 import NewTaskForm from '../new-task-form';
 import Footer from '../footer';
 import TaskList from '../task-list';
 
 import './app.css';
 
-const App = () => {
+export default class App extends Component {
 
-  const todoData = [
-    { status: 'completed', label: 'Completed task', createdAt: 'created 17 seconds ago', id: 1 },
-    { status: 'editing', label: 'Editing task', id: 2, isEditing:true},
-    { label: 'Active task', createdAt: 'created 5 minutes ago', id: 3 }
-  ];
+  state = {
+    todoData: [
+      { id: 1, taskStatus: "completed", label: "Completed task" },
+      { id: 2, taskStatus: "editing", label: "Editing task" },
+      { id: 3, taskStatus: "", label: "Active task" },
+    ],
+  }
 
-  return (
-    <section className="todoapp">
-      <NewTaskForm />
-      <section className="main">
-        <TaskList todos={todoData} />
-        <Footer />
+  onComplete = (id) => {
+    this.setState(({ todoData }) => ({
+      todoData: todoData.map((todo) => {
+        if (id === todo.id) {
+          todo.taskStatus = todo.taskStatus === "" ? "completed" : "";
+        }
+        return todo;
+      }),
+    }));
+  };
+
+  onDelete = (id) => {
+    this.setState(({ todoData }) => ({
+      todoData: todoData.filter((todo) => todo.id !== id),
+    }));
+  };
+
+  onEdit = (id) => {
+    this.setState(({ todoData }) => ({
+      todoData: todoData.map((todo) => {
+        if (todo.taskStatus === "editing") todo.taskStatus = "";
+        if (todo.id === id && todo.taskStatus !== "completed")
+          todo.taskStatus = "editing";
+        return todo;
+      }),
+    }));
+  };
+
+  editInput = (id, value) => {
+    this.setState(({ todoData }) => ({
+      todoData: todoData.map((todo) => {
+        if (todo.id === id) todo.label = value;
+        return todo;
+      }),
+    }));
+  };
+
+  editSubmit = (id) => {
+    this.setState(({ todoData }) => ({
+      todoData: todoData.map((todo) => {
+        if (todo.id === id) todo.taskStatus = "";
+        return todo;
+      }),
+    }));
+  };
+
+  render () {
+
+    const {todoData } = this.state;
+    return (
+      <section className="todoapp">
+        <NewTaskForm />
+        <section className="main">
+          <TaskList 
+            todos={ todoData }
+            onComplete={this.onComplete}
+            onDelete={this.onDelete}
+            onEdit={this.onEdit}
+            editInput={this.editInput}
+            editSubmit={this.editSubmit}
+          />
+          <Footer />
+        </section>
       </section>
-    </section>
-  );
-};
+    );
+  }
+}
 
-export default App;
+
+
+
