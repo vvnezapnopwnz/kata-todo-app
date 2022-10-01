@@ -22,7 +22,7 @@ export default class TaskList extends Component {
           onDelete={onDelete}
           onComplete={onComplete}
           onEdit={onEdit}
-           editInput={ editInput}
+          editInput={ editInput}
           editSubmit={editSubmit}
           key={item.id}
         />
