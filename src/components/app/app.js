@@ -83,7 +83,8 @@ export default class App extends Component {
     return {
       label: label,
       taskStatus: status,
-      id: this.maxId++
+      id: this.maxId++,
+      createdAt: new Date(),
     }
   }
 

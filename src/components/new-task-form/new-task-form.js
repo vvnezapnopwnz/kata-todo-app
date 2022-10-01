@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from "prop-types";
 import './new-task-form.css';
 
 export default class NewTaskForm extends Component {
 
+  static propTypes = {
+    onItemAdded: PropTypes.func,
+  };
+  
     state = {
       label: '',
   }
@@ -10,7 +15,7 @@ export default class NewTaskForm extends Component {
   onLabelChange = (e) => {
       this.setState({
           label: e.target.value
-          })
+      })
   }
 
   onSubmit = (e) => {
