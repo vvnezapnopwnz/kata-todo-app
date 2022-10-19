@@ -1,20 +1,21 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import './new-task-form.css'
+import './NewTaskForm.css'
 
 export default class NewTaskForm extends Component {
   state = {
     label: '',
   }
 
-  onLabelChange = (e) => {
+  onLabelChange = (event) => {
+    const { value } = event.target
     this.setState({
-      label: e.target.value,
+      label: value,
     })
   }
 
-  onSubmit = (e) => {
-    e.preventDefault()
+  onSubmit = (event) => {
+    event.preventDefault()
     const { label } = this.state
     const { onItemAdded } = this.props
     onItemAdded(label)
@@ -27,13 +28,16 @@ export default class NewTaskForm extends Component {
       <div className="header">
         <h1>todos</h1>
         <form className="item-add-form d-flex" onSubmit={this.onSubmit}>
-          <input
-            value={label}
-            onChange={this.onLabelChange}
-            className="new-todo"
-            placeholder="What needs to be done?"
-            autoFocus
-          />
+          <label className="task-edit-label" htmlFor="task-add">
+            <input
+              id="task-add"
+              value={label}
+              onChange={this.onLabelChange}
+              className="new-todo"
+              placeholder="What needs to be done?"
+              autoFocus
+            />
+          </label>
         </form>
       </div>
     )

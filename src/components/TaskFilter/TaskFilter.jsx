@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './task-filter.css'
+import './TaskFilter.css'
 
-export default class TasksFilter extends Component {
+export default class TaskFilter extends Component {
   state = {
     buttons: [
       { name: 'all', label: 'All' },
@@ -30,12 +30,12 @@ export default class TasksFilter extends Component {
     return <ul className="filters">{filterButtons}</ul>
   }
 }
-TasksFilter.defaultProps = {
+TaskFilter.defaultProps = {
   filter: 'all',
   onFilter: () => {},
 }
 
-TasksFilter.propTypes = {
+TaskFilter.propTypes = {
   filter: PropTypes.string,
   onFilter: PropTypes.func,
 }

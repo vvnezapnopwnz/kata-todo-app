@@ -1,21 +1,30 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { formatDistanceToNow } from 'date-fns'
-import './task.css'
+import './Task.css'
 
 export default class Task extends PureComponent {
   render() {
     const { id, taskStatus, label, onDelete, onComplete, onEdit, editInput, editSubmit, createdAt } = this.props
 
-    const onSubmitHandler = (e) => {
-      e.preventDefault()
-      editSubmit(id)
+    const onSubmitHandler = (event) => {
+      event.preventDefault()
+      editSubmit(id, label)
     }
 
     const taskInput =
       taskStatus === 'editing' ? (
-        <form onSubmit={(e) => onSubmitHandler(e)}>
-          <input type="text" className="edit" value={label} onChange={(e) => editInput(id, e.target.value)} />
+        <form onSubmit={(event) => onSubmitHandler(event)}>
+          <label className="task-edit-label" htmlFor={`task-edit-${id}`}>
+            <input
+              id={`task-edit-${id}`}
+              autoFocus
+              type="text"
+              className="edit"
+              value={label}
+              onChange={(event) => editInput(id, event.target.value)}
+            />
+          </label>
         </form>
       ) : (
         ''

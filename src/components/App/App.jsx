@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-import NewTaskForm from '../new-task-form'
-import Footer from '../footer'
-import TaskList from '../task-list'
+import { NewTaskForm } from '../NewTaskForm'
+import { Footer } from '../Footer'
+import { TaskList } from '../TaskList'
 
-import './app.css'
+import './App.css'
 
 export default class App extends Component {
   constructor() {
@@ -30,47 +30,61 @@ export default class App extends Component {
     }
 
     this.onComplete = (id) => {
-      this.setState(({ todoData }) => ({
-        todoData: todoData.map((todo) => {
-          if (id === todo.id) {
-            todo.taskStatus = todo.taskStatus === '' ? 'completed' : ''
-          }
-          return todo
-        }),
+      const { todoData } = this.state
+      const newData = todoData.map((todo) => {
+        if (id === todo.id) {
+          todo.taskStatus = todo.taskStatus === '' ? 'completed' : ''
+        }
+        return todo
+      })
+
+      this.setState(() => ({
+        todoData: newData,
       }))
     }
 
     this.onDelete = (id) => {
-      this.setState(({ todoData }) => ({
-        todoData: todoData.filter((todo) => todo.id !== id),
+      const { todoData } = this.state
+      const newData = todoData.filter((todo) => todo.id !== id)
+      this.setState(() => ({
+        todoData: newData,
       }))
     }
 
     this.onEdit = (id) => {
-      this.setState(({ todoData }) => ({
-        todoData: todoData.map((todo) => {
-          if (todo.taskStatus === 'editing') todo.taskStatus = ''
-          if (todo.id === id && todo.taskStatus !== 'completed') todo.taskStatus = 'editing'
-          return todo
-        }),
+      const { todoData } = this.state
+      const editedData = todoData.map((todo) => {
+        if (todo.taskStatus === 'editing') todo.taskStatus = ''
+        if (todo.id === id && todo.taskStatus !== 'completed') todo.taskStatus = 'editing'
+        return todo
+      })
+      this.setState(() => ({
+        todoData: editedData,
       }))
     }
 
     this.editInput = (id, value) => {
-      this.setState(({ todoData }) => ({
-        todoData: todoData.map((todo) => {
-          if (todo.id === id) todo.label = value
-          return todo
-        }),
+      const { todoData } = this.state
+      const editedData = todoData.map((todo) => {
+        if (todo.id === id) todo.label = value
+        return todo
+      })
+      this.setState(() => ({
+        todoData: editedData,
       }))
     }
 
-    this.editSubmit = (id) => {
-      this.setState(({ todoData }) => ({
-        todoData: todoData.map((todo) => {
-          if (todo.id === id) todo.taskStatus = ''
-          return todo
-        }),
+    this.editSubmit = (id, value) => {
+      if (value.trim() === '') {
+        return
+      }
+      const { todoData } = this.state
+      const editedData = todoData.map((todo) => {
+        if (todo.id === id) todo.taskStatus = ''
+        return todo
+      })
+      this.setState(() => ({
+        todoData: editedData,
       }))
     }
 
@@ -89,6 +103,9 @@ export default class App extends Component {
     }
 
     this.addItem = (text) => {
+      if (text.trim() === '') {
+        return
+      }
       const newItem = this.createTodoItem(text)
       this.setState(({ todoData }) => {
         const newData = [...todoData, newItem]
@@ -99,12 +116,11 @@ export default class App extends Component {
     }
 
     this.onClearCompleted = () => {
-      this.setState(({ todoData }) => {
-        const filteredData = todoData.filter(({ taskStatus }) => taskStatus !== 'completed')
-        return {
-          todoData: filteredData,
-        }
-      })
+      const { todoData } = this.state
+      const filteredData = todoData.filter(({ taskStatus }) => taskStatus !== 'completed')
+      this.setState(() => ({
+        todoData: filteredData,
+      }))
     }
   }
 

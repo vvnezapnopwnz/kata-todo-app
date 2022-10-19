@@ -25,6 +25,7 @@
   "plugins": ["react", "prettier", "import"],
   "rules": {
     "no-param-reassign": [2, { "props": false }],
+    "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
     "jsx-a11y/control-has-associated-label": "off",
     "jsx-a11y/no-autofocus": "off",

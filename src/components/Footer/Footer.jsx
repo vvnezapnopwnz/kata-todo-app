@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-import './footer.css'
+import './Footer.css'
 
-import TasksFilter from '../task-filter'
+import { TaskFilter } from '../TaskFilter'
 
 export default class Footer extends PureComponent {
   render() {
@@ -11,7 +11,7 @@ export default class Footer extends PureComponent {
     return (
       <footer className="footer">
         <span className="todo-count">{todoCount} items left</span>
-        <TasksFilter filter={filter} onFilter={onFilter} />
+        <TaskFilter filter={filter} onFilter={onFilter} />
         <button onClick={onClearCompleted} className="clear-completed" type="button">
           Clear completed
         </button>
