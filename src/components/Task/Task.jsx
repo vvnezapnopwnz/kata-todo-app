@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { formatDistanceToNow } from 'date-fns'
+import { formatDistanceToNowStrict } from 'date-fns'
 import './Task.css'
 
 export default class Task extends PureComponent {
@@ -17,8 +17,9 @@ export default class Task extends PureComponent {
         <form onSubmit={(event) => onSubmitHandler(event)}>
           <label className="task-edit-label" htmlFor={`task-edit-${id}`}>
             <input
-              id={`task-edit-${id}`}
+              ref={(input) => input && input.focus()}
               autoFocus
+              id={`task-edit-${id}`}
               type="text"
               className="edit"
               value={label}
@@ -43,7 +44,7 @@ export default class Task extends PureComponent {
           <label htmlFor={`task-${id}`}>
             <span className="description">{label}</span>
             <span className="created">
-              created {formatDistanceToNow(createdAt, { includeSeconds: true, addSuffix: true })} ago
+              created {formatDistanceToNowStrict(createdAt, { includeSeconds: true, addSuffix: false })} ago
             </span>
           </label>
           <button className="icon icon-edit" onClick={() => onEdit(id)} type="button" />
