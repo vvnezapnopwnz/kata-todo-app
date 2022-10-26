@@ -81,7 +81,7 @@ export default class Task extends PureComponent {
             <span className="description">{label}</span>
             <span className="timer">
               <button className="icon icon-play" type="button" onClick={() => this.onPlayClick()} />
-              <button className="icon icon-pause" type="button" onClick={this.onPauseClick} />
+              <button className="icon icon-pause" type="button" onClick={() => this.onPauseClick()} />
               <span>{this.formattedTime(timerCount)}</span>
             </span>
             <span className="created">

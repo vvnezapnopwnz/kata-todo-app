@@ -27,17 +27,24 @@ export default class NewTaskForm extends Component {
     return (
       <div className="header">
         <h1>todos</h1>
-        <form className="item-add-form d-flex" onSubmit={this.onSubmit}>
-          <label className="task-edit-label" htmlFor="task-add">
+        <form className="new-todo-form" onSubmit={this.onSubmit}>
+          <label htmlFor="task-add">
             <input
               id="task-add"
               value={label}
               onChange={this.onLabelChange}
               className="new-todo"
-              placeholder="What needs to be done?"
+              placeholder="Task"
               autoFocus
             />
           </label>
+          <label htmlFor="task-add-min">
+            <input id="task-add-min" className="new-todo-form__time" placeholder="Min" />
+          </label>
+          <label htmlFor="task-add-sec">
+            <input id="task-add-sec" className="new-todo-form__time" placeholder="Sec" />
+          </label>
+          <button className="new-todo-form__submit" type="submit" />
         </form>
       </div>
     )
