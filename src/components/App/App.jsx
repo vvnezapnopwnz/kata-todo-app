@@ -10,21 +10,15 @@ export default class App extends Component {
   constructor() {
     super()
     this.maxId = 4
-    this.createTodoItem = (label, status = '', id = this.maxId) => {
+    this.createTodoItem = (label, status = 'active', id = this.maxId) => {
       this.maxId += 1
-      const newItem = {
-        label,
-        taskStatus: status,
-        id,
-        createdAt: new Date(),
-      }
-      return newItem
+      return (timerValue = 0) => ({ label, timerValue, taskStatus: status, id, createdAt: new Date() })
     }
     this.state = {
       todoData: [
-        this.createTodoItem('Completed task', 'completed'),
-        this.createTodoItem('Editing task', 'editing'),
-        this.createTodoItem('Active task'),
+        this.createTodoItem('Completed task', 'completed')(),
+        this.createTodoItem('Editing task', 'editing')(),
+        this.createTodoItem('Active task')(),
       ],
       filter: 'all',
     }
@@ -33,7 +27,7 @@ export default class App extends Component {
       const { todoData } = this.state
       const newData = todoData.map((todo) => {
         if (id === todo.id) {
-          todo.taskStatus = todo.taskStatus === '' ? 'completed' : ''
+          todo.taskStatus = todo.taskStatus === 'active' ? 'completed' : 'active'
         }
         return todo
       })
@@ -54,7 +48,7 @@ export default class App extends Component {
     this.onEdit = (id) => {
       const { todoData } = this.state
       const editedData = todoData.map((todo) => {
-        if (todo.taskStatus === 'editing') todo.taskStatus = ''
+        if (todo.taskStatus === 'editing') todo.taskStatus = 'active'
         if (todo.id === id && todo.taskStatus !== 'completed') todo.taskStatus = 'editing'
         return todo
       })
@@ -80,7 +74,7 @@ export default class App extends Component {
       }
       const { todoData } = this.state
       const editedData = todoData.map((todo) => {
-        if (todo.id === id) todo.taskStatus = ''
+        if (todo.id === id) todo.taskStatus = 'active'
         return todo
       })
       this.setState(() => ({
@@ -93,20 +87,18 @@ export default class App extends Component {
     }
 
     this.filterItems = (items, filter) => {
-      if (filter === 'active') {
-        return items.filter(({ taskStatus }) => taskStatus !== 'completed')
+      if (filter === 'all') {
+        return items
       }
-      if (filter === 'completed') {
-        return items.filter(({ taskStatus }) => taskStatus === 'completed')
-      }
-      return items
+      return items.filter(({ taskStatus }) => taskStatus === filter)
     }
 
-    this.addItem = (text) => {
-      if (text.trim() === '') {
+    this.addItem = (taskName, min, sec) => {
+      if (taskName.trim() === '') {
         return
       }
-      const newItem = this.createTodoItem(text)
+      const timerValue = sec + min * 60
+      const newItem = this.createTodoItem(taskName)(timerValue)
       this.setState(({ todoData }) => {
         const newData = [...todoData, newItem]
         return {

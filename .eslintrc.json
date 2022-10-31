@@ -29,7 +29,6 @@
     "react/jsx-props-no-spreading": "off",
     "jsx-a11y/control-has-associated-label": "off",
     "jsx-a11y/no-autofocus": "off",
-    "indent": ["error", 2],
     "prettier/prettier": "error",
     "linebreak-style": [0, "unix"],
     "quotes": ["error", "single"],

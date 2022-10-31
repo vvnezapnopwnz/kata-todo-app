@@ -6,8 +6,9 @@ import './Task.css'
 export default class Task extends PureComponent {
   constructor(props) {
     super(props)
+    const { timerValue } = this.props
     this.state = {
-      timerCount: 0,
+      timerCount: 0 + timerValue,
       timerStatus: false,
     }
     this.onPlayClick = () => {
