@@ -1,4 +1,4 @@
 # Deployed via vercel
 
-https://todo-vvnezapnopwnz.vercel.app/
+https://kata-todo-app-vvnezapnopwnz.vercel.app/
 

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { formatDistanceToNowStrict, format, addSeconds } from 'date-fns'
+import { formatDistanceToNowStrict } from 'date-fns'
 import './Task.css'
 
 export default class Task extends PureComponent {
@@ -31,10 +31,10 @@ export default class Task extends PureComponent {
       }
     }
 
-    this.formattedTime = (seconds) => {
-      const helperDate = addSeconds(new Date(0), seconds)
-      return format(helperDate, 'mm:ss')
-    }
+    this.formattedTime = (seconds) =>
+      `${'0'.repeat(4 - String(Math.floor(seconds / 60)).length)}${Math.floor(seconds / 60)}:${Math.floor(
+        (seconds % 60) / 10
+      )}${Math.floor((seconds % 60) % 10)}`
   }
 
   componentWillUnmount() {

@@ -5,17 +5,18 @@ import './NewTaskForm.css'
 export default class NewTaskForm extends Component {
   constructor(props) {
     super(props)
-    this.state = {
+    const initialState = {
       taskName: '',
       min: '',
       sec: '',
     }
+    this.state = initialState
     this.validateField = ({ name, value }) => {
       switch (name) {
         case 'min':
-          return { name, value: Math.min(value, 9999) }
+          return { name, value: value !== '' ? Math.min(value, 9999) : '' }
         case 'sec':
-          return { name, value: Math.min(value, 59) }
+          return { name, value: value !== '' ? Math.min(value, 59) : '' }
         default:
           return { name, value }
       }
@@ -30,8 +31,11 @@ export default class NewTaskForm extends Component {
       event.preventDefault()
       const { taskName, min, sec } = this.state
       const { onItemAdded } = this.props
+      if (min === '' && sec === '') {
+        return
+      }
       onItemAdded(taskName, +min || 0, +sec || 0)
-      this.setState({ taskName: '', min: '', sec: '' })
+      this.setState(this.initialState)
     }
   }
 
